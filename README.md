@@ -1,6 +1,26 @@
 # Node.js Deployment Guide
 
-> This guide will walk you through the steps to deploy a Node.js app on DigitalOcean using PM2, NGINX as a reverse proxy, and an SSL from Let's Encrypt.
+# Note: it's recommended to not use the root user for the following steps. Instead, create a non-root user with sudo privileges and use that user.
+
+> To create a non-root user:
+```
+adduser <username>
+```
+> By adding your new user to the sudo group with the following command, you will grant them sudo privileges and the ability to perform actions with elevated privileges:
+```
+usermod -aG sudo <username>
+```
+> Log out of the root user account with the following command:
+```
+exit
+```
+> Log in to your server with your new user account using SSH:
+```
+ssh <username>@your_server_ip_address
+```
+> You can now use your new user account to perform actions with elevated privileges by prepending the sudo command to your commands.
+
+# This guide will walk you through the steps to deploy a Node.js app on DigitalOcean using PM2, NGINX as a reverse proxy, and an SSL from Let's Encrypt.
 
 ## 1. Create a Free DigitalOcean Account and Get $200 Credit
 
