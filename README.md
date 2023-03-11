@@ -1,13 +1,20 @@
-# Node.js Deployment
+# Node.js Deployment Guide
 
-> Steps to deploy a Node.js app to DigitalOcean using PM2, NGINX as a reverse proxy and an SSL from LetsEncrypt
+> This guide will walk you through the steps to deploy a Node.js app on DigitalOcean using PM2, NGINX as a reverse proxy, and an SSL from Let's Encrypt.
 
-## 1. Create Free DigitalOcean Account and get free 200$ credits from the link below
+## 1. Create a Free DigitalOcean Account and Get $200 Credit
+
+> To get started, create a free DigitalOcean account using the link below and get a free $200 credit:
        https://m.do.co/c/6146a51374b2
 
-## 2. Create and Lauch an droplet and SSH into machine
+## 2. Create and Launch a Droplet and SSH into the Machine
 
-## 3. Install Node and NPM
+> Next, create a droplet on DigitalOcean and SSH into the machine.
+
+## 3. Install Node.js and NPM
+
+> Install Node.js and NPM by running the following commands:
+
 ```
 curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
 sudo apt install nodejs
@@ -15,12 +22,18 @@ sudo apt install nodejs
 node --version
 ```
 
-## 4. Clone your project from Github
+## 4. Clone Your Project from GitHub
+
+> Clone your project from GitHub by running the following command:
+
 ```
 git clone "your project link"
 ```
 
-## 5. Install dependencies and test app
+## 5. Install Dependencies and Test the App
+
+> Install the necessary dependencies and test the app by running the following commands:
+
 ```
 sudo npm i pm2 -g
 pm2 start index
@@ -37,7 +50,10 @@ pm2 flush (Clear logs)
 pm2 startup ubuntu
 ```
 
-## 6. Setup Firewall
+## 6. Set Up the Firewall
+
+> Set up the firewall by running the following commands:
+
 ```
 sudo ufw enable
 sudo ufw status
@@ -46,13 +62,16 @@ sudo ufw allow http (Port 80)
 sudo ufw allow https (Port 443)
 ```
 
-## 7. Install NGINX and configure
+## 7. Install NGINX and Configure
+
+> Install NGINX and configure it by running the following commands:
+
 ```
 sudo apt install nginx
 
 sudo nano /etc/nginx/sites-available/default
 ```
-Add the following to the location part of the server block
+> Add the following code to the location part of the server block:
 ```
     server_name yourdomain.com www.yourdomain.com;
 
@@ -65,6 +84,7 @@ Add the following to the location part of the server block
         proxy_cache_bypass $http_upgrade;
     }
 ```
+>  Check the NGINX config and restart NGINX by running the following commands:
 ```
 # Check NGINX config
 sudo nginx -t
@@ -73,7 +93,10 @@ sudo nginx -t
 sudo nginx -s reload
 ```
 
-## 8. Add SSL with LetsEncrypt
+## 8. Add SSL with Let's Encrypt
+
+> Finally, add an SSL certificate from Let's Encrypt by running the following commands:
+
 ```
 sudo add-apt-repository ppa:certbot/certbot
 sudo apt-get update
@@ -83,3 +106,4 @@ sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com
 # Only valid for 90 days, test the renewal process with
 certbot renew --dry-run
 ```
+> That's it! Your Node.js app should now be up and running on DigitalOcean with PM2, NGINX, and SSL from Let's Encrypt.
